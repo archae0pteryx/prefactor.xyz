@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.1
+    environment:
+      - POSTGRES_USER=prefactor
+      - POSTGRES_PASSWORD=prefactor
+      - POSTGRES_DB=prefactor
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    volumes:
+      - prefactor_db:/var/lib/postgresql/data/pgdata
+
+volumes:
+  prefactor_db:
