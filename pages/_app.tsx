@@ -1,22 +1,35 @@
-import type { AppProps } from 'next/app'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { useRouter } from 'next/router'
-import type { NextComponentType } from 'next'
-import React, { useEffect, useState } from 'react'
-import { LoadOverlay } from '../components/LoadOverlay'
+import { Apollo } from '../lib/apollo'
+import { Backdrop, CircularProgress } from '@mui/material'
 import { SessionProvider, useSession } from 'next-auth/react'
+import { Theme } from '../styles/theme'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import type { AppProps } from 'next/app'
+import type { NextComponentType } from 'next'
 
-import '../styles/globals.css'
+import '../styles/global.css'
 
-const client = new ApolloClient({
-  uri: `${process.env.VERCEL_URL || 'http://localhost:3000'}/api/graphql`,
-  cache: new InMemoryCache(),
-})
-function Auth({ children }: any) {
+function Loading({ loading }: { loading: boolean }) {
+  return (
+    <Backdrop
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 10 }}
+      open={loading}
+    >
+      <CircularProgress color="inherit" />
+    </Backdrop>
+  )
+}
+
+interface IAuthWrapperProps {
+  children: any
+  routeLoading: boolean
+}
+
+function AuthWrapper({ children, routeLoading }: IAuthWrapperProps) {
   const { status } = useSession({ required: true })
 
-  if (status === 'loading') {
-    return <p>loading...</p>
+  if (status === 'loading' || routeLoading) {
+    return <Loading loading={status === 'loading'} />
   }
 
   return children
@@ -32,7 +45,7 @@ export default function App({
 }: AuthAppProps) {
   const router = useRouter()
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const handleStart = (url: string) =>
@@ -50,23 +63,24 @@ export default function App({
       router.events.off('routeChangeError', handleComplete)
     }
   })
+
   return (
-    <SessionProvider session={session}>
-      <ApolloProvider client={client}>
-        {loading ? (
-          <LoadOverlay />
-        ) : (
+    <Theme>
+      <SessionProvider session={session}>
+        <Apollo>
           <>
-            {Component.auth ? (
-              <Auth>
+            {loading ? (
+              <Loading loading={loading} />
+            ) : Component.auth ? (
+              <AuthWrapper routeLoading={loading}>
                 <Component {...pageProps} />
-              </Auth>
+              </AuthWrapper>
             ) : (
               <Component {...pageProps} />
             )}
           </>
-        )}
-      </ApolloProvider>
-    </SessionProvider>
+        </Apollo>
+      </SessionProvider>
+    </Theme>
   )
 }

@@ -1,58 +1,50 @@
-// import {
-//   objectType,
-//   mutationType,
-//   stringArg,
-//   nonNull,
-//   enumType,
-//   extendType,
-//   nullable,
-// } from 'nexus'
-// import { signupUserMutation } from '../mutations/signup'
-// import { allUsersQuery } from '../queries/allUsers'
+import { enumType, extendType, nonNull, objectType, stringArg } from 'nexus'
+import { findUserQuery } from '../queries/allUsers'
 
-// const AccountTypeEnum = enumType({
-//   name: 'AccountEnum',
-//   members: ['REVIEWER', 'SUBMITTER'],
-// })
+const RoleEnum = enumType({
+  name: 'RoleEnum',
+  members: ['USER', 'REVIEWER', 'ADMIN'],
+})
 
-// export const User = objectType({
-//   name: 'User',
-//   definition(t) {
-//     t.string('id')
-//     t.string('email')
-//     t.string('passwordSalt')
-//     t.string('passwordHash')
-//     t.field('accountType', { type: AccountTypeEnum })
-//     t.field('createdAt', { type: nonNull('Date') })
-//     t.field('updatedAt', { type: nonNull('Date') })
-//     t.nullable.field('github', {
-//       type: nullable('Github'),
-//       resolve: async (parent, args, ctx) => {
-//         return await ctx.prisma.github.findUnique({
-//           where: { id: parent.id || '' },
-//         }) || {}
-//       },
-//     })
-//     t.list.field('code', {
-//       type: 'Code',
-//       resolve: (parent, _args, ctx) => {
-//         return ctx.prisma.code.findMany({
-//           where: { userId: parent.id || '' },
-//         })
-//       },
-//     })
-//   },
-// })
+export const User = objectType({
+  name: 'User',
+  definition(t) {
+    t.string('id')
+    t.string('name')
+    t.string('login')
+    t.string('blog')
+    t.string('bio')
+    t.string('twitter_username')
+    t.string('avatar_url')
+    t.string('gravatar_id')
+    t.string('company')
+    t.string('email')
+    t.field('emailVerified', { type: 'Date' })
+    t.string('image')
+    t.field('role', { type: RoleEnum })
+    t.field('createdAt', { type: nonNull('Date') })
+    t.field('updatedAt', { type: nonNull('Date') })
+    // t.list.field('accounts', {
+    //   type: 'Account',
+    // })
+    // t.list.field('sessions', {
+    //   type: 'Session',
+    // })
+  },
+})
 
-// export const UserQuery = extendType({
-//   type: 'Query',
-//   definition(t) {
-//     t.list.field('allUsers', {
-//       type: 'User',
-//       resolve: allUsersQuery,
-//     })
-//   },
-// })
+export const UserQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('findUser', {
+      type: User,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: findUserQuery,
+    })
+  },
+})
 
 // export const UserMutation = mutationType({
 //   definition(t) {
@@ -66,4 +58,3 @@
 //     })
 //   },
 // })
-export {}

@@ -1,16 +1,28 @@
-import NextAuth from 'next-auth'
+import NextAuth, { Session } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prisma from '../../../prisma/client'
+import { User } from '@prisma/client'
+
+export type UserSession = null &
+  boolean &
+  Session & {
+    user: {
+      prismaId: number
+      githubAccessToken: string
+      username: string
+    }
+  }
 
 export const authOptions = {
-  adaptor: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
     }),
   ],
+  pages: {
+    signIn: 'auth/signin',
+  },
   callbacks: {
     async jwt({ token, account, profile }: any) {
       if (account) {
@@ -24,13 +36,15 @@ export const authOptions = {
           gravatar_id,
           company,
           email,
-        } = profile
+          name,
+        }: User = profile
 
         const user = await prisma.user.upsert({
           where: {
             email: profile.email,
           },
           create: {
+            name,
             login,
             location,
             blog,
@@ -42,6 +56,7 @@ export const authOptions = {
             email,
           },
           update: {
+            name,
             login,
             location,
             blog,
@@ -73,7 +88,7 @@ export const authOptions = {
   },
   logger: {
     error(code: any, metadata: any) {
-      console.error('NEXT_AUTH_ERROR', code, metadata)
+      console.error('error[next-auth]:', code, metadata)
     },
   },
 }

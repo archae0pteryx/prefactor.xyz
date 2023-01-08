@@ -5,5 +5,29 @@
 scalar Date
 
 type Query {
-  ok: Boolean!
+  findUser(id: String!): User
+}
+
+enum RoleEnum {
+  ADMIN
+  REVIEWER
+  USER
+}
+
+type User {
+  avatar_url: String
+  bio: String
+  blog: String
+  company: String
+  createdAt: Date!
+  email: String
+  emailVerified: Date
+  gravatar_id: String
+  id: String
+  image: String
+  login: String
+  name: String
+  role: RoleEnum
+  twitter_username: String
+  updatedAt: Date!
 }

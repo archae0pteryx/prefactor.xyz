@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'REVIEWER', 'ADMIN');
+
 -- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
@@ -39,8 +42,11 @@ CREATE TABLE "User" (
     "gravatar_id" TEXT,
     "company" TEXT,
     "email" TEXT,
-    "emailVerified" TIMESTAMP(3),
+    "emailVerified" TIMESTAMP(3) NOT NULL,
     "image" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
