@@ -1,56 +1,23 @@
-import { Alert, Avatar, Skeleton, Typography } from '@mui/material'
-import AppLayout from '../layouts/AppLayout'
+import { Alert, Skeleton, Typography, Button } from '@mui/material'
+import AppLayout from '../../components/AppLayout'
 import React, { useEffect } from 'react'
-import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import { useSession } from 'next-auth/react'
-import { gql, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { User } from '@prisma/client'
-import { NavLayout } from '../layouts/NavLayout'
+import { NavLayout } from '../../components/Navigation/NavLayout'
+import { ItemBlock, GridItem } from '../../components/Profile/ItemBlock'
+import { UserAvatar } from '../../components/Profile/Avatar'
+import { USER_QUERY } from '../../graphql/queries/user'
 
 function ProfileInfoItem(prismaUser: User) {
   return (
-    <Item>
+    <ItemBlock>
       <Typography>{prismaUser?.name || prismaUser.email}</Typography>
-    </Item>
+    </ItemBlock>
   )
 }
-
-const Item = styled(Paper)(({ theme }) => ({
-  // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  height: '100%',
-}))
-
-const USER_QUERY = gql`
-  query UserQuery($id: String!) {
-    findUser(id: $id) {
-      name
-      role
-      bio
-      blog
-      avatar_url
-      login
-      image
-      id
-      gravatar_id
-      emailVerified
-      email
-      createdAt
-      company
-      twitter_username
-      updatedAt
-    }
-  }
-`
 
 export function ProfileGrid() {
   const [findUser, { data: prismaData, error, loading }] =
@@ -81,10 +48,10 @@ export function ProfileGrid() {
         </Grid>
         {error?.message && (
           <Grid item xs>
-            <Item>{error.message}</Item>
+            <ItemBlock>{error.message}</ItemBlock>
           </Grid>
         )}
-        <Grid item xs>
+        <GridItem>
           {!isLoading ? (
             <ProfileInfoItem {...prismaUser} />
           ) : (
@@ -95,32 +62,21 @@ export function ProfileGrid() {
               height="100%"
             />
           )}
-        </Grid>
-        <Grid item xs={2}>
-          {!isLoading ? (
-            <Avatar
-              alt="user avatar"
-              src={user?.image || 'https://www.fillmurray.com/400/400'}
-              sx={{ width: 100, height: 100 }}
-            />
-          ) : (
-            <Skeleton
-              animation="wave"
-              variant="circular"
-              width={100}
-              height={100}
-            />
-          )}
-        </Grid>
-        <Grid item xs={12}>
-          <Item>xs=4</Item>
-        </Grid>
+        </GridItem>
+        <GridItem>
+          <UserAvatar isLoading={isLoading} image={user.image} />
+        </GridItem>
+        <GridItem>
+          <ItemBlock>
+            <Button variant="contained">Apply for developer</Button>
+          </ItemBlock>
+        </GridItem>
       </Grid>
     </Box>
   )
 }
 
-export default function ProfilePage() {
+export default function UserProfilePage() {
   return (
     <>
       <NavLayout>
@@ -134,4 +90,4 @@ export default function ProfilePage() {
   )
 }
 
-ProfilePage.auth = true
+UserProfilePage.auth = true

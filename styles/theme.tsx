@@ -13,20 +13,20 @@ const theme = responsiveFontSizes(
     palette: {
       mode: 'dark',
       primary: {
-        main: '#455a64',
-        light: '#718792',
-        dark: '#1c313a',
-        contrastText: '#fafafa',
+        main: '#616161',
+        light: '#8e8e8e',
+        dark: '#373737',
+        contrastText: '#eeeeee',
       },
       secondary: {
-        main: '#b0bec5',
-        light: '#e2f1f8',
-        dark: '#808e95',
-        contrastText: '#ffffff',
+        main: '#90a4ae',
+        light: '#c1d5e0',
+        dark: '#62757f',
+        contrastText: '#1c313a',
       },
       text: {
-        primary: '#fafafa',
-        secondary: '#b0bec5',
+        primary: '#cfd8dc',
+        secondary: '#eeeeee',
       },
     },
     typography: {

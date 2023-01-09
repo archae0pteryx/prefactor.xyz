@@ -1,19 +1,12 @@
-import Head from 'next/head'
-import { useSession, signOut, signIn } from 'next-auth/react'
-import { Typography, Button, Box } from '@mui/material'
-import { useRouter } from 'next/router'
+import { GetStartedButton } from '../components/Home/GetStartedButton'
+import { HomeLayout } from '../components/Home/HomeLayout'
+import { Typography, Box } from '@mui/material'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
   const { data } = useSession()
-  const router = useRouter()
   return (
-    <>
-      <Head>
-        <title>prefactor</title>
-        <meta name="description" content="prefactor" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <HomeLayout>
       <Box
         sx={{
           position: 'fixed',
@@ -27,41 +20,16 @@ export default function Home() {
           width: '100%',
         }}
       >
-        <Box display="flex" alignItems="center" gap={4}>
+        <Box display="flex" alignItems="flex-end" gap={4}>
           <Box>
-            <Typography variant="h3" padding={0} margin={0}>
-              Prefactor
+            <Typography variant="h3">Prefactor</Typography>
+            <Typography paddingLeft={0.5} fontSize={12}>
+              Developers as a service
             </Typography>
-            <Typography>Code as prose</Typography>
           </Box>
-          <Box>
-            {data ? (
-              <>
-
-              <Button color="secondary" size="large" onClick={() => router.push('/profile')} >
-                Profile
-              </Button>
-              <Button color="secondary" size="large" onClick={() => signOut()}>
-                signout
-              </Button>
-              </>
-            ) : (
-              <Button
-                color="secondary"
-                size="large"
-                variant="outlined"
-                onClick={() =>
-                  signIn('github', {
-                    callbackUrl: `${window.location.origin}/profile`,
-                  })
-                }
-              >
-                login
-              </Button>
-            )}
-          </Box>
+          {!data && <GetStartedButton />}
         </Box>
       </Box>
-    </>
+    </HomeLayout>
   )
 }

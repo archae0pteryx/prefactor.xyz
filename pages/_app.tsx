@@ -3,11 +3,13 @@ import { Backdrop, CircularProgress } from '@mui/material'
 import { SessionProvider, useSession } from 'next-auth/react'
 import { Theme } from '../styles/theme'
 import { useRouter } from 'next/router'
+import AppLayout from '../components/AppLayout'
 import React, { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import type { NextComponentType } from 'next'
 
 import '../styles/global.css'
+import { UserProvider } from '../lib/useUser'
 
 function Loading({ loading }: { loading: boolean }) {
   return (
@@ -68,17 +70,17 @@ export default function App({
     <Theme>
       <SessionProvider session={session}>
         <Apollo>
-          <>
-            {loading ? (
-              <Loading loading={loading} />
-            ) : Component.auth ? (
-              <AuthWrapper routeLoading={loading}>
+          <UserProvider>
+            <AppLayout>
+              {Component.auth ? (
+                <AuthWrapper routeLoading={loading}>
+                  <Component {...pageProps} />
+                </AuthWrapper>
+              ) : (
                 <Component {...pageProps} />
-              </AuthWrapper>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </>
+              )}
+            </AppLayout>
+          </UserProvider>
         </Apollo>
       </SessionProvider>
     </Theme>

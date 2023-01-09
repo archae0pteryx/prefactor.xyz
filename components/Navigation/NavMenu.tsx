@@ -1,36 +1,19 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-// import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-
-import { IoIosPerson } from 'react-icons/io'
+import { IoIosHome, IoIosPerson } from 'react-icons/io'
 import { BiLogOut, BiCog, BiMenu } from 'react-icons/bi'
-
-const pages = [
-  {
-    name: 'Submit code',
-    href: '/',
-  },
-  {
-    name: 'Profile',
-    href: '/profile',
-  },
-  {
-    name: 'About',
-    href: '/about',
-  },
-]
-
-const ICON_SIZE = 20
-
-const MenuLineItem = () => <></>
+import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
 
 export function Navigation() {
+  const { data } = useSession()
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,9 +22,15 @@ export function Navigation() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const role = data?.user?.role
+  const isUser = role === 'USER'
   return (
     <Box
       sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
         display: 'flex',
         justifyContent: 'flex-end',
         padding: 2,
@@ -69,28 +58,32 @@ export function Navigation() {
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
       >
         <MenuItem
+          onClick={() => router.push('/')}
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
           }}
         >
-          Submit
+          <ListItemIcon>
+            <IoIosHome fontSize="small" />
+          </ListItemIcon>
+          Home
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={() => router.push('/profile')}>
           <ListItemIcon>
             <IoIosPerson fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Profile
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => router.push('/settings')}>
           <ListItemIcon>
             <BiCog fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => signOut({ redirect: true })}>
           <ListItemIcon>
             <BiLogOut fontSize="small" />
           </ListItemIcon>
