@@ -929,6 +929,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-scroll@npm:^1.8.6":
+  version: 1.8.6
+  resolution: "@types/react-scroll@npm:1.8.6"
+  dependencies:
+    "@types/react": "*"
+  checksum: e73aaa4d02ba0afc91aa0dd853933f64963754fbaceb16e685586281cbb4f8bf15dae0176aab7cbc8b75ebfa0211672e3c7972ee2fb703ddd3a2fb665cd6c95b
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "@types/react-transition-group@npm:4.4.5"
@@ -2678,6 +2687,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.throttle@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.throttle@npm:4.1.1"
+  checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
 "loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -3179,6 +3195,7 @@ __metadata:
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/react-dom": 18.0.10
+    "@types/react-scroll": ^1.8.6
     eslint: 8.31.0
     eslint-config-next: 13.1.1
     eslint-config-prettier: ^8.6.0
@@ -3191,6 +3208,8 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-icons: ^4.7.1
+    react-scroll: ^1.8.9
+    react-use-scroll-snap: ^0.0.4
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -3297,6 +3316,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-scroll@npm:^1.8.9":
+  version: 1.8.9
+  resolution: "react-scroll@npm:1.8.9"
+  dependencies:
+    lodash.throttle: ^4.1.1
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.5.4 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 534ea65713a59ef7ddf623e38058220b654730352b624371cb2250bcf99784806b4564f3fa9295c969980e227e3de15903d95e069f9a3ca520ff0c0c1fb2e362
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -3309,6 +3341,17 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-use-scroll-snap@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "react-use-scroll-snap@npm:0.0.4"
+  dependencies:
+    tweezer.js: ^1.5.0
+  peerDependencies:
+    react: ">=16.8.1"
+  checksum: 1a254afcd0c4f4cead4310d96042deb2814e31f061779af15e6cee5c9f61f9a8baaf48ee19c992854760f95da77155813e1baa571317f1db958931778426ad44
   languageName: node
   linkType: hard
 
@@ -3764,6 +3807,13 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"tweezer.js@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "tweezer.js@npm:1.5.0"
+  checksum: c6802b5a4f10fd5a2e60e5eb378367845dc0eb05dfbb3a49922f17933e1c8cdd0827deee760de512826aacbfbc090848b4718398a8d4a7df61ce39329b2bd1e3
   languageName: node
   linkType: hard
 

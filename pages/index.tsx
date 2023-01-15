@@ -3,21 +3,25 @@ import { HomeLayout } from '../components/Home/HomeLayout'
 import { Typography, Box } from '@mui/material'
 import { useSession } from 'next-auth/react'
 
+
+const LogoSection = () => {
+  return (
+    <></>
+  )
+}
+
 export default function Home() {
   const { data } = useSession()
   return (
     <HomeLayout>
       <Box
         sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100%',
-          width: '100%',
+          height: '100vh',
+          margin: 0
         }}
       >
         <Box display="flex" alignItems="flex-end" gap={4}>
