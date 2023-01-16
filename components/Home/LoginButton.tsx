@@ -7,7 +7,6 @@ export function LoginButton() {
     <Button
       color="secondary"
       sx={{
-        position: 'fixed',
         fontSize: 10,
         zIndex: theme.zIndex.appBar,
       }}

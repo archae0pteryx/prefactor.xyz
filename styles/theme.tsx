@@ -5,32 +5,48 @@ import {
   responsiveFontSizes,
 } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-
 import '@fontsource/montserrat'
 
 const theme = responsiveFontSizes(
   createTheme({
     palette: {
       mode: 'dark',
+      background: {
+        default: 'rgba(33,37,41,1)',
+        paper: '#343A40',
+      },
       primary: {
-        main: '#616161',
-        light: '#8e8e8e',
-        dark: '#373737',
-        contrastText: '#eeeeee',
+        main: '#DEE2E6',
+        contrastText: '#1c313a',
       },
       secondary: {
-        main: '#90a4ae',
-        light: '#c1d5e0',
-        dark: '#62757f',
+        main: '#ADB5BD',
         contrastText: '#1c313a',
       },
       text: {
-        primary: '#cfd8dc',
-        secondary: '#eeeeee',
+        primary: '#F8F9FA',
+        secondary: '#CED4DA',
+      },
+      error: {
+        main: '#ef233c',
+        contrastText: '#fff',
+      },
+      warning: {
+        main: '#ff8800',
+        contrastText: '#fff',
+      },
+      info: {
+        main: '#8d99ae',
+        contrastText: '#fff',
+      },
+      success: {
+        main: '#90a955',
+        contrastText: '#fff',
       },
     },
     typography: {
       fontFamily: 'montserrat',
+      fontSize: 12,
     },
   })
 )

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useState, MouseEvent } from 'react'
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -9,21 +9,21 @@ import Tooltip from '@mui/material/Tooltip'
 import { IoIosHome, IoIosPerson } from 'react-icons/io'
 import { BiLogOut, BiCog, BiMenu } from 'react-icons/bi'
 import { useRouter } from 'next/router'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 
 export function Navigation() {
-  const { data } = useSession()
+  // const { data } = useSession()
   const router = useRouter()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const role = data?.user?.role
-  const isUser = role === 'USER'
+  // const role = data?.user?.role
+  // const isUser = role === 'USER'
   return (
     <Box
       sx={{
